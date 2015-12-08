@@ -65,6 +65,8 @@ My_Vector::My_Vector(double a, double b)
 
 class Gamestate
 {
+public:
+	virtual void update() = 0;
 
 };
 
