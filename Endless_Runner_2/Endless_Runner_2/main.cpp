@@ -65,8 +65,17 @@ My_Vector::My_Vector(double a, double b)
 
 class Gamestate
 {
+
 public:
 	virtual void update() = 0;
+	virtual void draw() = 0;
+
+	virtual void onActivate() = 0;
+	virtual void onDeactivate() = 0;
+};
+
+class MainMenu_Gamestate : public Gamestate
+{
 
 };
 
