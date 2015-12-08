@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -63,20 +64,38 @@ My_Vector::My_Vector(double a, double b)
 	y = b;
 }
 
+class Gamestate_Manager;
+
 class Gamestate
 {
+	friend class Gamestate_manager;
 
 public:
 	virtual void update() = 0;
 	virtual void draw() = 0;
 
-	virtual void onActivate() = 0;
-	virtual void onDeactivate() = 0;
+	virtual void handleInput()
+	{
+
+	}
+	virtual void onActivate()
+	{
+
+	}
+	virtual void onDeactivate()
+	{
+
+	}
 };
 
-class MainMenu_Gamestate : public Gamestate
+class Gamestate_MainMenu : public Gamestate
 {
 
+};
+
+class Gamestate_Manager
+{
+	vector<shared_ptr<Gamestate>> 
 };
 
 int main()
