@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <memory>
+#include <math.h>
 
 using namespace std;
 
@@ -32,7 +32,7 @@ public:
 	}
 
 	float magnitude() const {
-		return std::sqrt(squared_magnitude());
+		return sqrt(squared_magnitude());
 	}
 	My_Vector operator+(const My_Vector &right_hand_side) const {
 		return My_Vector(right_hand_side.x + x, right_hand_side.y + y);
@@ -64,38 +64,108 @@ My_Vector::My_Vector(double a, double b)
 	y = b;
 }
 
-class Gamestate_Manager;
-
 class Gamestate
 {
-	friend class Gamestate_manager;
 
 public:
+	virtual void init() = 0;
+	virtual void cleanUp() = 0;
+
+	virtual void pause() = 0;
+	virtual void resume() = 0;
+
 	virtual void update() = 0;
 	virtual void draw() = 0;
 
-	virtual void handleInput()
-	{
-
-	}
-	virtual void onActivate()
-	{
-
-	}
-	virtual void onDeactivate()
-	{
-
-	}
+	virtual void onActivate() = 0;
+	virtual void onDeactivate() = 0;
 };
 
-class Gamestate_MainMenu : public Gamestate
+class GameStateManager
 {
+public:
+	void ChangeState(Gamestate* state);
+	void PushState(Gamestate* state);
+	void PopState();
+	void Clear();
 
+private:
+	std::vector<Gamestate*> m_states;
 };
 
-class Gamestate_Manager
+void GameStateManager::Clear()
 {
-	vector<shared_ptr<Gamestate>> 
+	while (!m_states.empty())
+	{
+		m_states.back()->cleanUp();
+		m_states.pop_back();
+	}
+}
+
+
+void GameStateManager::ChangeState(Gamestate *state)
+{
+	// Cleanup the current state
+	if (!m_states.empty())
+	{
+		m_states.back()->cleanUp();
+		m_states.pop_back();
+	}
+
+	// Store and init the new state
+	m_states.push_back(state);
+	m_states.back()->init();
+}
+
+
+
+// Pause the current state and go to a new state
+void GameStateManager::PushState(Gamestate *state)
+{
+	if (!m_states.empty())
+		m_states.back()->pause();
+
+	m_states.push_back(state);
+	m_states.back()->init();
+}
+
+
+//Leave current state and go to previous state
+void GameStateManager::PopState()
+{
+	if (!m_states.empty())
+	{
+		m_states.back()->cleanUp();
+		m_states.pop_back();
+	}
+
+	if (!m_states.empty())
+		m_states.back()->resume();
+}
+
+
+class MainMenu_Gamestate : public Gamestate
+{
+public:
+	MainMenu_Gamestate() {}
+};
+
+class Pause_Gamestate : public Gamestate
+{
+public:
+	Pause_Gamestate() {}
+};
+
+class GameOver_Gamestate : public Gamestate
+{
+public:
+	GameOver_Gamestate() {}
+};
+
+class Leaderboard_Gamestate : public Gamestate
+{
+public:
+	Leaderboard_Gamestate() {}
 };
 
 int main()
