@@ -33,14 +33,13 @@ int main()
 
 	LiveGame_Gamestate livegame(window1, window_width,window_height, fps);
 
+	livegame.onActivate();
+
 	//Main Game Loop
 	while (window1.isOpen())
 	{
 		//Start Clock
 		sf::Clock frame_timer;
-
-		//Handle Gamestates
-		livegame.onActivate();
 
 		//Handle Inputs
 		sf::Event event;

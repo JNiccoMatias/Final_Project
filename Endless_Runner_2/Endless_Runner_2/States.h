@@ -42,6 +42,7 @@ class LiveGame_Gamestate : public Gamestate
 	int window_height;
 	int platform_height;
 	int platform_width;
+	int current_platform_elevation;
 	My_Vector run_speed;
 
 	//sf::CircleShape shape;
@@ -52,22 +53,24 @@ class LiveGame_Gamestate : public Gamestate
 	int gap_distance;
 
 
+
 public:
 	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps) : render_window(window)
 	{
 		window_width = width;
 		window_height = height;
 		run_speed.Set_X(-1 * window_width / 2.5 / fps);
+		current_platform_elevation = 19;
 
 		platform_height = window_height / 20;
 
 		gap_distance = window_width / 4;
 
-		platform_width = window_width / 3;
+		platform_width = window_width * 2 / 3;
 
-		platform1.setPosition(sf::Vector2f(window_width, platform_height * 19));
-		platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * 19));
-		platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * 19));
+		platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
+		platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
+		platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 	}
 
 	virtual void onActivate()
@@ -75,7 +78,6 @@ public:
 		//sf::CircleShape shape(100.f);
 		//shape.setFillColor(sf::Color::Green);
 		//shape.setRadius(100.f);
-
 
 		platform1.setSize(sf::Vector2f(platform_width, platform_height));
 		platform1.setFillColor(sf::Color::Green);
@@ -110,18 +112,25 @@ public:
 		platform1.move(run_speed.Get_X(), run_speed.Get_Y());
 		platform2.move(run_speed.Get_X(), run_speed.Get_Y());
 		platform3.move(run_speed.Get_X(), run_speed.Get_Y());
+		if ((platform1.getPosition().x + platform_width < 0) || (platform2.getPosition().x + platform_width < 0) || (platform3.getPosition().x + platform_width < 0))
+		{
+			//random_device seed;
+			//uniform_int_distribution<int> platform_elevation_randomizer(current_platform_elevation - 2, current_platform_elevation);
 
-		if (platform1.getPosition().x + platform_width < 0)
-		{
-			platform1.setPosition(platform3.getPosition().x + platform_width + gap_distance, platform_height * 19);
-		}
-		if (platform2.getPosition().x + platform_width < 0)
-		{
-			platform2.setPosition(platform1.getPosition().x + platform_width + gap_distance, platform_height * 19);
-		}
-		if (platform3.getPosition().x + platform_width < 0)
-		{
-			platform3.setPosition(platform2.getPosition().x + platform_width + gap_distance, platform_height * 19);
+			//current_platform_elevation = platform_elevation_randomizer(seed);
+
+			if (platform1.getPosition().x + platform_width < 0)
+			{
+				platform1.setPosition(platform3.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
+			}
+			if (platform2.getPosition().x + platform_width < 0)
+			{
+				platform2.setPosition(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
+			}
+			if (platform3.getPosition().x + platform_width < 0)
+			{
+				platform3.setPosition(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
+			}
 		}
 	}
 	virtual void draw()
