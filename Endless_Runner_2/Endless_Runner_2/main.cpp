@@ -22,7 +22,6 @@ int main()
 	random_device random_seeder;
 	mt19937 random_engine(random_seeder());
 
-
 	sf::Font font;
 	if (!font.loadFromFile("AlegreyaSans-Regular.ttf"))
 	{

@@ -15,7 +15,17 @@ class GamesStateManager;
 class Gamestate
 {
 	friend class GameStateManager;
+
+protected:
+	sf::RenderWindow &render_window;
+	int window_width;
+	int window_height;
+	int run_speed;
+
 public:
+
+	Gamestate(sf::RenderWindow &window, int width, int height, int fps);
+
 	virtual ~Gamestate()
 	{
 
@@ -35,13 +45,13 @@ public:
 
 class LiveGame_Gamestate : public Gamestate
 {
-	sf::RenderWindow &render_window;
-	int window_width;
-	int window_height;
+	//sf::RenderWindow &render_window;
+	//int window_width;
+	//int window_height;
+	//int run_speed;
 	int platform_height;
 	int platform_width;
 	int current_platform_elevation;
-	int run_speed;
 
 	//sf::CircleShape shape;
 
@@ -52,6 +62,7 @@ class LiveGame_Gamestate : public Gamestate
 
 public:
 	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
+	//LiveGame_Gamestate();
 
 	virtual void onActivate();
 
@@ -70,10 +81,14 @@ public:
 
 class MainMenu_Gamestate : public Gamestate
 {
-	sf::RenderWindow &render_window;
+	//sf::RenderWindow &render_window;
+	//int window_width;
+	//int window_height;
+	//int run_speed;
 
 public:
-	MainMenu_Gamestate(sf::RenderWindow &window);
+	MainMenu_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
+	//MainMenu_Gamestate();
 
 	virtual void onActivate();
 
@@ -92,10 +107,14 @@ public:
 
 class Pause_Gamestate : public Gamestate
 {
-	sf::RenderWindow &render_window;
+	//sf::RenderWindow &render_window;
+	//int window_width;
+	//int window_height;
+	//int run_speed;
 
 public:
-	Pause_Gamestate(sf::RenderWindow &window);
+	Pause_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
+	//Pause_Gamestate();
 
 	virtual void onActivate();
 
@@ -114,10 +133,14 @@ public:
 
 class GameOver_Gamestate : public Gamestate
 {
-	sf::RenderWindow &render_window;
+	//sf::RenderWindow &render_window;
+	//int window_width;
+	//int window_height;
+	//int run_speed;
 
 public:
-	GameOver_Gamestate(sf::RenderWindow &window);
+	GameOver_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
+	//GameOver_Gamestate();
 
 	virtual void onActivate();
 
@@ -136,10 +159,14 @@ public:
 
 class Leaderboard_Gamestate : public Gamestate
 {
-	sf::RenderWindow &render_window;
+	//sf::RenderWindow &render_window;
+	//int window_width;
+	//int window_height;
+	//int run_speed;
 
 public:
-	Leaderboard_Gamestate(sf::RenderWindow &window);
+	Leaderboard_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
+	//Leaderboard_Gamestate();
 
 	virtual void onActivate();
 
