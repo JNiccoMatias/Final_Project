@@ -5,8 +5,10 @@
 #include <memory>
 #include <random>
 
-//#include "MyVector.h"
+#include "MyVector.h"
 #include "States.h"
+
+using namespace std;
 
 Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) : render_window(window)
 {
@@ -15,6 +17,13 @@ Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) :
 	//run_speed.Set_X(-1 * window_width / 2.5 / fps);
 	run_speed = -1 * window_width / 2.5 / fps;
 }
+
+/*
+void Gamestate::update(int rand_arg1)
+{
+	rand1 = rand_arg1;
+}
+*/
 
 /*
 LiveGame_Gamestate::LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps) : render_window(window)
@@ -47,9 +56,9 @@ LiveGame_Gamestate::LiveGame_Gamestate(sf::RenderWindow &window, int width, int 
 
 	platform_width = window_width * 2 / 3;
 
-	platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
-	platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
-	platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
+	//platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
+	//platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
+	//platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 }
 
 void LiveGame_Gamestate::onActivate()
@@ -66,9 +75,9 @@ void LiveGame_Gamestate::onActivate()
 
 	//platform_width = window_width * 2 / 3;
 
-	//platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
-	//platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
-	//platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
+	platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
+	platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
+	platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 
 	platform1.setSize(sf::Vector2f(platform_width, platform_height));
 	platform1.setFillColor(sf::Color::Green);
@@ -106,8 +115,13 @@ void LiveGame_Gamestate::update()
 	if ((platform1.getPosition().x + platform_width < 0) || (platform2.getPosition().x + platform_width < 0) || (platform3.getPosition().x + platform_width < 0))
 	{
 		//default_random_engine generator;
-		//uniform_int_distribution<int> platform_elevation_randomizer(current_platform_elevation - 2, current_platform_elevation);
+		//uniform_int_distribution<int> platform_elevation_randomizer(0, 19);
 		//current_platform_elevation = platform_elevation_randomizer(generator);
+
+		//random_device random_seeder;
+		mt19937 engine(time(0));
+		uniform_int_distribution<int> platform_dist(current_platform_elevation - 4, 19);
+		current_platform_elevation = platform_dist(engine);
 
 		if (platform1.getPosition().x + platform_width < 0)
 		{

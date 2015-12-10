@@ -19,8 +19,10 @@ int main()
 	const sf::Time mspf = sf::milliseconds(1000 / fps);
 
 	//generate random number ranges
-	random_device random_seeder;
-	mt19937 random_engine(random_seeder());
+	//random_device random_seeder;
+	//mt19937 engine(random_seeder());
+	//uniform_int_distribution<int> platform_elevation_dist(-2, 19);
+	//int random_platform_elevation;
 
 	sf::Font font;
 	if (!font.loadFromFile("AlegreyaSans-Regular.ttf"))

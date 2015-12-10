@@ -10,6 +10,12 @@
 #include <memory>
 #include <random>
 
+//#include "MyVector.h"
+
+using namespace std;
+
+//class My_Vector;
+
 class GamesStateManager;
 
 class Gamestate
@@ -21,6 +27,7 @@ protected:
 	int window_width;
 	int window_height;
 	int run_speed;
+	//int rand1;
 
 public:
 
@@ -38,6 +45,7 @@ public:
 	virtual void resume() = 0;
 
 	virtual void handleInputs() = 0;
+	//virtual void update(int rand_arg1);
 	virtual void update() = 0;
 	virtual void draw() = 0;
 
@@ -52,6 +60,8 @@ class LiveGame_Gamestate : public Gamestate
 	int platform_height;
 	int platform_width;
 	int current_platform_elevation;
+	//random_device random_seeder;
+	//My_Vector vec;
 
 	//sf::CircleShape shape;
 
