@@ -27,6 +27,7 @@ protected:
 	int window_width;
 	int window_height;
 	int run_speed;
+	sf::Font font;
 	//int rand1;
 
 public:
@@ -57,18 +58,28 @@ class LiveGame_Gamestate : public Gamestate
 	//int window_width;
 	//int window_height;
 	//int run_speed;
+
 	int platform_height;
 	int platform_width;
 	int current_platform_elevation;
+	int bomb_elevation;
+
 	//random_device random_seeder;
 	//My_Vector vec;
-
 	//sf::CircleShape shape;
 
 	sf::RectangleShape platform1;
 	sf::RectangleShape platform2;
 	sf::RectangleShape platform3;
 	int gap_distance;
+
+	sf::Texture bombpic;
+	sf::Sprite bomb1_1;
+	sf::Sprite bomb1_2;
+	sf::Sprite bomb2_1;
+	sf::Sprite bomb2_2;
+	sf::Sprite bomb3_1;
+	sf::Sprite bomb3_2;
 
 public:
 	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps);

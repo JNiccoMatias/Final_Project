@@ -17,6 +17,11 @@ Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) :
 	window_height = height;
 	//run_speed.Set_X(-1 * window_width / 2.5 / fps);
 	run_speed = -1 * window_width / 2.5 / fps;
+
+	if (!font.loadFromFile("AlegreyaSans-Regular.ttf"))
+	{
+		render_window.close();
+	}
 }
 
 /*
@@ -50,12 +55,9 @@ LiveGame_Gamestate::LiveGame_Gamestate(sf::RenderWindow &window, int width, int 
 LiveGame_Gamestate::LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps) : Gamestate(window, width, height, fps)
 {
 	current_platform_elevation = 19;
-
 	platform_height = window_height / 20;
-
 	gap_distance = window_width / 4;
-
-	platform_width = window_width * 2 / 3;
+	platform_width = window_width * 0.9;
 
 	//platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
 	//platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
@@ -69,16 +71,9 @@ void LiveGame_Gamestate::onActivate()
 	//shape.setRadius(100.f);
 
 	//current_platform_elevation = 19;
-
 	//platform_height = window_height / 20;
-
 	//gap_distance = window_width / 4;
-
 	//platform_width = window_width * 2 / 3;
-
-	platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
-	platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
-	platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 
 	platform1.setSize(sf::Vector2f(platform_width, platform_height));
 	platform1.setFillColor(sf::Color::Green);
@@ -86,6 +81,31 @@ void LiveGame_Gamestate::onActivate()
 	platform2.setFillColor(sf::Color::Red);
 	platform3.setSize(sf::Vector2f(platform_width, platform_height));
 	platform3.setFillColor(sf::Color::Blue);
+
+	platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
+	platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
+	platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
+
+	if (!bombpic.loadFromFile("bomb.png"))
+	{
+		render_window.close();
+	}
+	bomb1_1.setTexture(bombpic);
+	bomb1_2.setTexture(bombpic);
+	bomb2_1.setTexture(bombpic);
+	bomb2_2.setTexture(bombpic);
+	bomb3_1.setTexture(bombpic);
+	bomb3_2.setTexture(bombpic);
+
+	bomb_elevation =  2;
+	//bomb1_1.setPosition(window_width, bomb_elevation);
+	bomb1_1.setPosition(platform1.getPosition().x + platform_width / 3 - bomb1_1.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+	bomb1_2.setPosition(platform1.getPosition().x + platform_width * 2 / 3 - bomb1_2.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+	bomb2_1.setPosition(platform2.getPosition().x + platform_width / 3 - bomb2_1.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+	bomb2_2.setPosition(platform2.getPosition().x + platform_width * 2 / 3 - bomb2_2.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+	bomb3_1.setPosition(platform3.getPosition().x + platform_width / 3 - bomb3_1.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+	bomb3_2.setPosition(platform3.getPosition().x + platform_width * 2 / 3 - bomb3_2.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+
 }
 void LiveGame_Gamestate::onDeactivate()
 {
@@ -113,6 +133,14 @@ void LiveGame_Gamestate::update()
 	platform1.move(run_speed, 0);
 	platform2.move(run_speed, 0);
 	platform3.move(run_speed, 0);
+
+	bomb1_1.move(run_speed, 0);
+	bomb1_2.move(run_speed, 0);
+	bomb2_1.move(run_speed, 0);
+	bomb2_2.move(run_speed, 0);
+	bomb3_1.move(run_speed, 0);
+	bomb3_2.move(run_speed, 0);
+
 	if ((platform1.getPosition().x + platform_width < 0) || (platform2.getPosition().x + platform_width < 0) || (platform3.getPosition().x + platform_width < 0))
 	{
 		//default_random_engine generator;
@@ -122,19 +150,41 @@ void LiveGame_Gamestate::update()
 		//random_device random_seeder;
 		mt19937 engine(time(0));
 		uniform_int_distribution<int> platform_dist(current_platform_elevation - 4, 19);
-		current_platform_elevation = platform_dist(engine);
+		uniform_int_distribution<int> bomb_dist(1, 2);
 
+		current_platform_elevation = platform_dist(engine);
+		if (current_platform_elevation < 10)
+		{
+			current_platform_elevation = 10;
+		}
 		if (platform1.getPosition().x + platform_width < 0)
 		{
 			platform1.setPosition(platform3.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
+
+			bomb_elevation = bomb_dist(engine);
+			bomb1_1.setPosition(platform1.getPosition().x + platform_width / 3 - bomb1_1.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+			bomb_elevation = bomb_dist(engine);
+			bomb1_2.setPosition(platform1.getPosition().x + platform_width * 2 / 3 - bomb1_2.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+
 		}
 		if (platform2.getPosition().x + platform_width < 0)
 		{
 			platform2.setPosition(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
+
+			bomb_elevation = bomb_dist(engine);
+			bomb2_1.setPosition(platform2.getPosition().x + platform_width / 3 - bomb2_1.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+			bomb_elevation = bomb_dist(engine);
+			bomb2_2.setPosition(platform2.getPosition().x + platform_width * 2 / 3 - bomb2_2.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+
 		}
 		if (platform3.getPosition().x + platform_width < 0)
 		{
 			platform3.setPosition(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
+			bomb_elevation = bomb_dist(engine);
+			bomb3_1.setPosition(platform3.getPosition().x + platform_width / 3 - bomb3_1.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+			bomb_elevation = bomb_dist(engine);
+			bomb3_2.setPosition(platform3.getPosition().x + platform_width * 2 / 3 - bomb3_2.getGlobalBounds().width / 2, platform_height * current_platform_elevation - (125 * bomb_elevation));
+
 		}
 	}
 }
@@ -147,6 +197,12 @@ void LiveGame_Gamestate::draw()
 	render_window.draw(platform1);
 	render_window.draw(platform2);
 	render_window.draw(platform3);
+	render_window.draw(bomb1_1);
+	render_window.draw(bomb1_2);
+	render_window.draw(bomb2_1);
+	render_window.draw(bomb2_2);
+	render_window.draw(bomb3_1);
+	render_window.draw(bomb3_2);
 }
 
 

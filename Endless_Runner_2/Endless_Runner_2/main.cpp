@@ -24,11 +24,10 @@ int main()
 	//uniform_int_distribution<int> platform_elevation_dist(-2, 19);
 	//int random_platform_elevation;
 
+	/*
 	sf::Font font;
-	if (!font.loadFromFile("AlegreyaSans-Regular.ttf"))
-	{
-		return 0;
-	}
+	
+	*/
 
 	sf::RenderWindow window1(sf::VideoMode(window_width, window_height), "Endless Runner", sf::Style::Close);
 
