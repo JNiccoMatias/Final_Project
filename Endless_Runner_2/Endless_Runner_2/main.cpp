@@ -31,7 +31,7 @@ int main()
 
 	sf::RenderWindow window1(sf::VideoMode(window_width, window_height), "Endless Runner", sf::Style::Close);
 
-	LiveGame_Gamestate livegame(window1);
+	LiveGame_Gamestate livegame(window1, window_width,window_height, fps);
 
 	//Main Game Loop
 	while (window1.isOpen())
@@ -39,6 +39,7 @@ int main()
 		//Start Clock
 		sf::Clock frame_timer;
 
+		//Handle Gamestates
 		livegame.onActivate();
 
 		//Handle Inputs

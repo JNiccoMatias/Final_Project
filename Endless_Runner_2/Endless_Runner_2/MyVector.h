@@ -12,6 +12,7 @@ class My_Vector
 	double x, y;
 
 public:
+	My_Vector();
 	My_Vector(double, double);
 	double Get_X()
 	{
@@ -30,11 +31,11 @@ public:
 		y = b;
 	}
 
-	float squared_magnitude() const {
+	double squared_magnitude() const {
 		return x * x + y * y;
 	}
 
-	float magnitude() const {
+	double magnitude() const {
 		return sqrt(squared_magnitude());
 	}
 	My_Vector operator+(const My_Vector &right_hand_side) const {
@@ -49,11 +50,11 @@ public:
 		return My_Vector(scalar * x, scalar * y);
 	}
 
-	float operator*(const My_Vector &right_hand_side) const {
+	double operator*(const My_Vector &right_hand_side) const {
 		return x * right_hand_side.x + y * right_hand_side.y;
 	}
 
-	float operator%(const My_Vector &right_hand_side) const {
+	double operator%(const My_Vector &right_hand_side) const {
 		return x * right_hand_side.y - y * right_hand_side.x;
 	}
 
@@ -61,7 +62,11 @@ public:
 		return My_Vector(-y, x);
 	}
 };
-
+My_Vector::My_Vector()
+{
+	x = 0;
+	y = 0;
+}
 My_Vector::My_Vector(double a, double b)
 {
 	x = a;

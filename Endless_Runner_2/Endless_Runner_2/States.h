@@ -40,22 +40,49 @@ class LiveGame_Gamestate : public Gamestate
 	sf::RenderWindow &render_window;
 	int window_width;
 	int window_height;
+	int platform_height;
+	int platform_width;
+	My_Vector run_speed;
 
-	sf::CircleShape shape;
+	//sf::CircleShape shape;
+
+	sf::RectangleShape platform1;
+	sf::RectangleShape platform2;
+	sf::RectangleShape platform3;
+	int gap_distance;
+
 
 public:
-	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height) : render_window(window)
+	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps) : render_window(window)
 	{
 		window_width = width;
 		window_height = height;
+		run_speed.Set_X(-1 * window_width / 2.5 / fps);
+
+		platform_height = window_height / 20;
+
+		gap_distance = window_width / 4;
+
+		platform_width = window_width / 3;
+
+		platform1.setPosition(sf::Vector2f(window_width, platform_height * 19));
+		platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * 19));
+		platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * 19));
 	}
 
 	virtual void onActivate()
 	{
 		//sf::CircleShape shape(100.f);
 		//shape.setFillColor(sf::Color::Green);
-		shape.setRadius(100.f);
+		//shape.setRadius(100.f);
 
+
+		platform1.setSize(sf::Vector2f(platform_width, platform_height));
+		platform1.setFillColor(sf::Color::Green);
+		platform2.setSize(sf::Vector2f(platform_width, platform_height));
+		platform2.setFillColor(sf::Color::Red);
+		platform3.setSize(sf::Vector2f(platform_width, platform_height));
+		platform3.setFillColor(sf::Color::Blue);
 	}
 	virtual void onDeactivate()
 	{
@@ -75,19 +102,37 @@ public:
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			My_Vector velocity(10, 10);
-			shape.move(velocity.Get_X(), velocity.Get_Y());
+			//shape.move(run_speed.Get_X(), run_speed.Get_Y());
 		}
 	}
 	virtual void update()
 	{
+		platform1.move(run_speed.Get_X(), run_speed.Get_Y());
+		platform2.move(run_speed.Get_X(), run_speed.Get_Y());
+		platform3.move(run_speed.Get_X(), run_speed.Get_Y());
 
+		if (platform1.getPosition().x + platform_width < 0)
+		{
+			platform1.setPosition(platform3.getPosition().x + platform_width + gap_distance, platform_height * 19);
+		}
+		if (platform2.getPosition().x + platform_width < 0)
+		{
+			platform2.setPosition(platform1.getPosition().x + platform_width + gap_distance, platform_height * 19);
+		}
+		if (platform3.getPosition().x + platform_width < 0)
+		{
+			platform3.setPosition(platform2.getPosition().x + platform_width + gap_distance, platform_height * 19);
+		}
 	}
 	virtual void draw()
 	{
 		//sf::CircleShape shape(100.f);
 		//shape.setFillColor(sf::Color::Green);
-		render_window.draw(shape);
+		//render_window.draw(shape);
+		//platform1.move(-100, 0);
+		render_window.draw(platform1);
+		render_window.draw(platform2);
+		render_window.draw(platform3);
 	}
 };
 
