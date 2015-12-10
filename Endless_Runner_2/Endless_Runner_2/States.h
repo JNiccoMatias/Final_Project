@@ -8,6 +8,7 @@
 #include <math.h>
 #include <vector>
 #include <memory>
+#include <random>
 
 #include "MyVector.h"
 
@@ -37,15 +38,23 @@ public:
 class LiveGame_Gamestate : public Gamestate
 {
 	sf::RenderWindow &render_window;
+	int window_width;
+	int window_height;
+
+	sf::CircleShape shape;
 
 public:
-	LiveGame_Gamestate(sf::RenderWindow &window) : render_window(window)
+	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height) : render_window(window)
 	{
-
+		window_width = width;
+		window_height = height;
 	}
 
 	virtual void onActivate()
 	{
+		//sf::CircleShape shape(100.f);
+		//shape.setFillColor(sf::Color::Green);
+		shape.setRadius(100.f);
 
 	}
 	virtual void onDeactivate()
@@ -64,7 +73,11 @@ public:
 
 	virtual void handleInputs()
 	{
-
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			My_Vector velocity(10, 10);
+			shape.move(velocity.Get_X(), velocity.Get_Y());
+		}
 	}
 	virtual void update()
 	{
@@ -72,8 +85,8 @@ public:
 	}
 	virtual void draw()
 	{
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);
+		//sf::CircleShape shape(100.f);
+		//shape.setFillColor(sf::Color::Green);
 		render_window.draw(shape);
 	}
 };
@@ -116,9 +129,7 @@ public:
 	}
 	virtual void draw()
 	{
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);
-		render_window.draw(shape);
+
 	}
 };
 
@@ -160,9 +171,7 @@ public:
 	}
 	virtual void draw()
 	{
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);
-		render_window.draw(shape);
+
 	}
 };
 
@@ -204,9 +213,7 @@ public:
 	}
 	virtual void draw()
 	{
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);
-		render_window.draw(shape);
+
 	}
 };
 
@@ -248,9 +255,7 @@ public:
 	}
 	virtual void draw()
 	{
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);
-		render_window.draw(shape);
+
 	}
 };
 
