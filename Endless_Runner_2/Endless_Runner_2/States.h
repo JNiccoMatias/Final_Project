@@ -198,6 +198,7 @@ public:
 class GameStateManager
 {
 	//vector<std::shared_ptr<Gamestate>> m_states;
+	vector<std::shared_ptr<Gamestate>> m_states;
 
 public:
 	void ChangeState(Gamestate* state);

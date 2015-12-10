@@ -29,5 +29,8 @@
     <ClInclude Include="States.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerChar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

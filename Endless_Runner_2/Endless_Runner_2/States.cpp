@@ -7,6 +7,7 @@
 
 #include "MyVector.h"
 #include "States.h"
+#include "PlayerChar.h"
 
 using namespace std;
 
