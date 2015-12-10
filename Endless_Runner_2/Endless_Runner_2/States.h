@@ -11,10 +11,19 @@
 
 #include "MyVector.h"
 
+class GamesStateManager;
+
 class Gamestate
 {
 	friend class GameStateManager;
 public:
+	virtual ~Gamestate()
+	{
+
+	}
+
+	virtual void onActivate() = 0;
+	virtual void onDeactivate() = 0;
 
 	virtual void pause() = 0;
 	virtual void resume() = 0;
@@ -23,20 +32,239 @@ public:
 	virtual void update() = 0;
 	virtual void draw() = 0;
 
-	virtual void onActivate() = 0;
-	virtual void onDeactivate() = 0;
 };
+
+class LiveGame_Gamestate : public Gamestate
+{
+	sf::RenderWindow &render_window;
+
+public:
+	LiveGame_Gamestate(sf::RenderWindow &window) : render_window(window)
+	{
+
+	}
+
+	virtual void onActivate()
+	{
+
+	}
+	virtual void onDeactivate()
+	{
+
+	}
+	
+	virtual void pause()
+	{
+
+	}
+	virtual void resume()
+	{
+
+	}
+
+	virtual void handleInputs()
+	{
+
+	}
+	virtual void update()
+	{
+
+	}
+	virtual void draw()
+	{
+		sf::CircleShape shape(100.f);
+		shape.setFillColor(sf::Color::Green);
+		render_window.draw(shape);
+	}
+};
+
+class MainMenu_Gamestate : public Gamestate
+{
+	sf::RenderWindow &render_window;
+
+public:
+	MainMenu_Gamestate(sf::RenderWindow &window) : render_window(window)
+	{
+
+	}
+
+	virtual void onActivate()
+	{
+
+	}
+	virtual void onDeactivate()
+	{
+
+	}
+
+	virtual void pause()
+	{
+
+	}
+	virtual void resume()
+	{
+
+	}
+
+	virtual void handleInputs()
+	{
+
+	}
+	virtual void update()
+	{
+
+	}
+	virtual void draw()
+	{
+		sf::CircleShape shape(100.f);
+		shape.setFillColor(sf::Color::Green);
+		render_window.draw(shape);
+	}
+};
+
+class Pause_Gamestate : public Gamestate
+{
+	sf::RenderWindow &render_window;
+
+public:
+	Pause_Gamestate(sf::RenderWindow &window) : render_window(window)
+	{
+
+	}
+
+	virtual void onActivate()
+	{
+
+	}
+	virtual void onDeactivate()
+	{
+
+	}
+
+	virtual void pause()
+	{
+
+	}
+	virtual void resume()
+	{
+
+	}
+
+	virtual void handleInputs()
+	{
+
+	}
+	virtual void update()
+	{
+
+	}
+	virtual void draw()
+	{
+		sf::CircleShape shape(100.f);
+		shape.setFillColor(sf::Color::Green);
+		render_window.draw(shape);
+	}
+};
+
+class GameOver_Gamestate : public Gamestate
+{
+	sf::RenderWindow &render_window;
+
+public:
+	GameOver_Gamestate(sf::RenderWindow &window) : render_window(window)
+	{
+
+	}
+
+	virtual void onActivate()
+	{
+
+	}
+	virtual void onDeactivate()
+	{
+
+	}
+
+	virtual void pause()
+	{
+
+	}
+	virtual void resume()
+	{
+
+	}
+
+	virtual void handleInputs()
+	{
+
+	}
+	virtual void update()
+	{
+
+	}
+	virtual void draw()
+	{
+		sf::CircleShape shape(100.f);
+		shape.setFillColor(sf::Color::Green);
+		render_window.draw(shape);
+	}
+};
+
+class Leaderboard_Gamestate : public Gamestate
+{
+	sf::RenderWindow &render_window;
+
+public:
+	Leaderboard_Gamestate(sf::RenderWindow &window) : render_window(window)
+	{
+
+	}
+
+	virtual void onActivate()
+	{
+
+	}
+	virtual void onDeactivate()
+	{
+
+	}
+
+	virtual void pause()
+	{
+
+	}
+	virtual void resume()
+	{
+
+	}
+
+	virtual void handleInputs()
+	{
+
+	}
+	virtual void update()
+	{
+
+	}
+	virtual void draw()
+	{
+		sf::CircleShape shape(100.f);
+		shape.setFillColor(sf::Color::Green);
+		render_window.draw(shape);
+	}
+};
+
+
 
 class GameStateManager
 {
+	//vector<std::shared_ptr<Gamestate>> m_states;
+
 public:
 	void ChangeState(Gamestate* state);
 	void PushState(Gamestate* state);
 	void PopState();
 	void Clear();
-
-private:
-	std::vector<Gamestate*> m_states;
 };
 
 void GameStateManager::Clear()
@@ -49,7 +277,6 @@ void GameStateManager::Clear()
 	}
 	**/
 }
-
 
 void GameStateManager::ChangeState(Gamestate *state)
 {
@@ -66,8 +293,6 @@ void GameStateManager::ChangeState(Gamestate *state)
 	m_states.back()->init();
 	**/
 }
-
-
 
 // Pause the current state and go to a new state
 void GameStateManager::PushState(Gamestate *state)
@@ -96,29 +321,4 @@ void GameStateManager::PopState()
 	m_states.back()->resume();
 	**/
 }
-
-
-class MainMenu_Gamestate : public Gamestate
-{
-public:
-	//MainMenu_Gamestate() {}
-};
-
-class Pause_Gamestate : public Gamestate
-{
-public:
-	//Pause_Gamestate() {}
-};
-
-class GameOver_Gamestate : public Gamestate
-{
-public:
-	//GameOver_Gamestate() {}
-};
-
-class Leaderboard_Gamestate : public Gamestate
-{
-public:
-	//Leaderboard_Gamestate() {}
-};
 #endif
