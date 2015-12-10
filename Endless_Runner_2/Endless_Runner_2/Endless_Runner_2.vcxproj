@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="States.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyVector.h" />

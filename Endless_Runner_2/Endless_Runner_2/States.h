@@ -10,8 +10,6 @@
 #include <memory>
 #include <random>
 
-#include "MyVector.h"
-
 class GamesStateManager;
 
 class Gamestate
@@ -43,7 +41,7 @@ class LiveGame_Gamestate : public Gamestate
 	int platform_height;
 	int platform_width;
 	int current_platform_elevation;
-	My_Vector run_speed;
+	int run_speed;
 
 	//sf::CircleShape shape;
 
@@ -52,97 +50,22 @@ class LiveGame_Gamestate : public Gamestate
 	sf::RectangleShape platform3;
 	int gap_distance;
 
-
-
 public:
-	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps) : render_window(window)
-	{
-		window_width = width;
-		window_height = height;
-		run_speed.Set_X(-1 * window_width / 2.5 / fps);
-		current_platform_elevation = 19;
+	LiveGame_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
 
-		platform_height = window_height / 20;
+	virtual void onActivate();
 
-		gap_distance = window_width / 4;
-
-		platform_width = window_width * 2 / 3;
-
-		platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
-		platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
-		platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
-	}
-
-	virtual void onActivate()
-	{
-		//sf::CircleShape shape(100.f);
-		//shape.setFillColor(sf::Color::Green);
-		//shape.setRadius(100.f);
-
-		platform1.setSize(sf::Vector2f(platform_width, platform_height));
-		platform1.setFillColor(sf::Color::Green);
-		platform2.setSize(sf::Vector2f(platform_width, platform_height));
-		platform2.setFillColor(sf::Color::Red);
-		platform3.setSize(sf::Vector2f(platform_width, platform_height));
-		platform3.setFillColor(sf::Color::Blue);
-	}
-	virtual void onDeactivate()
-	{
-
-	}
+	virtual void onDeactivate();
 	
-	virtual void pause()
-	{
+	virtual void pause();
 
-	}
-	virtual void resume()
-	{
+	virtual void resume();
 
-	}
+	virtual void handleInputs();
 
-	virtual void handleInputs()
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			//shape.move(run_speed.Get_X(), run_speed.Get_Y());
-		}
-	}
-	virtual void update()
-	{
-		platform1.move(run_speed.Get_X(), run_speed.Get_Y());
-		platform2.move(run_speed.Get_X(), run_speed.Get_Y());
-		platform3.move(run_speed.Get_X(), run_speed.Get_Y());
-		if ((platform1.getPosition().x + platform_width < 0) || (platform2.getPosition().x + platform_width < 0) || (platform3.getPosition().x + platform_width < 0))
-		{
-			//random_device seed;
-			//uniform_int_distribution<int> platform_elevation_randomizer(current_platform_elevation - 2, current_platform_elevation);
+	virtual void update();
 
-			//current_platform_elevation = platform_elevation_randomizer(seed);
-
-			if (platform1.getPosition().x + platform_width < 0)
-			{
-				platform1.setPosition(platform3.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
-			}
-			if (platform2.getPosition().x + platform_width < 0)
-			{
-				platform2.setPosition(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
-			}
-			if (platform3.getPosition().x + platform_width < 0)
-			{
-				platform3.setPosition(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation);
-			}
-		}
-	}
-	virtual void draw()
-	{
-		//sf::CircleShape shape(100.f);
-		//shape.setFillColor(sf::Color::Green);
-		//render_window.draw(shape);
-		//platform1.move(-100, 0);
-		render_window.draw(platform1);
-		render_window.draw(platform2);
-		render_window.draw(platform3);
-	}
+	virtual void draw();
 };
 
 class MainMenu_Gamestate : public Gamestate
@@ -150,41 +73,21 @@ class MainMenu_Gamestate : public Gamestate
 	sf::RenderWindow &render_window;
 
 public:
-	MainMenu_Gamestate(sf::RenderWindow &window) : render_window(window)
-	{
+	MainMenu_Gamestate(sf::RenderWindow &window);
 
-	}
+	virtual void onActivate();
 
-	virtual void onActivate()
-	{
+	virtual void onDeactivate();
 
-	}
-	virtual void onDeactivate()
-	{
+	virtual void pause();
 
-	}
+	virtual void resume();
 
-	virtual void pause()
-	{
+	virtual void handleInputs();
 
-	}
-	virtual void resume()
-	{
+	virtual void update();
 
-	}
-
-	virtual void handleInputs()
-	{
-
-	}
-	virtual void update()
-	{
-
-	}
-	virtual void draw()
-	{
-
-	}
+	virtual void draw();
 };
 
 class Pause_Gamestate : public Gamestate
@@ -192,41 +95,21 @@ class Pause_Gamestate : public Gamestate
 	sf::RenderWindow &render_window;
 
 public:
-	Pause_Gamestate(sf::RenderWindow &window) : render_window(window)
-	{
+	Pause_Gamestate(sf::RenderWindow &window);
 
-	}
+	virtual void onActivate();
 
-	virtual void onActivate()
-	{
+	virtual void onDeactivate();
 
-	}
-	virtual void onDeactivate()
-	{
+	virtual void pause();
 
-	}
+	virtual void resume();
 
-	virtual void pause()
-	{
+	virtual void handleInputs();
 
-	}
-	virtual void resume()
-	{
+	virtual void update();
 
-	}
-
-	virtual void handleInputs()
-	{
-
-	}
-	virtual void update()
-	{
-
-	}
-	virtual void draw()
-	{
-
-	}
+	virtual void draw();
 };
 
 class GameOver_Gamestate : public Gamestate
@@ -234,41 +117,21 @@ class GameOver_Gamestate : public Gamestate
 	sf::RenderWindow &render_window;
 
 public:
-	GameOver_Gamestate(sf::RenderWindow &window) : render_window(window)
-	{
+	GameOver_Gamestate(sf::RenderWindow &window);
 
-	}
+	virtual void onActivate();
 
-	virtual void onActivate()
-	{
+	virtual void onDeactivate();
 
-	}
-	virtual void onDeactivate()
-	{
+	virtual void pause();
 
-	}
+	virtual void resume();
 
-	virtual void pause()
-	{
+	virtual void handleInputs();
 
-	}
-	virtual void resume()
-	{
+	virtual void update();
 
-	}
-
-	virtual void handleInputs()
-	{
-
-	}
-	virtual void update()
-	{
-
-	}
-	virtual void draw()
-	{
-
-	}
+	virtual void draw();
 };
 
 class Leaderboard_Gamestate : public Gamestate
@@ -276,41 +139,21 @@ class Leaderboard_Gamestate : public Gamestate
 	sf::RenderWindow &render_window;
 
 public:
-	Leaderboard_Gamestate(sf::RenderWindow &window) : render_window(window)
-	{
+	Leaderboard_Gamestate(sf::RenderWindow &window);
 
-	}
+	virtual void onActivate();
 
-	virtual void onActivate()
-	{
+	virtual void onDeactivate();
 
-	}
-	virtual void onDeactivate()
-	{
+	virtual void pause();
 
-	}
+	virtual void resume();
 
-	virtual void pause()
-	{
+	virtual void handleInputs();
 
-	}
-	virtual void resume()
-	{
+	virtual void update();
 
-	}
-
-	virtual void handleInputs()
-	{
-
-	}
-	virtual void update()
-	{
-
-	}
-	virtual void draw()
-	{
-
-	}
+	virtual void draw();
 };
 
 
@@ -325,59 +168,4 @@ public:
 	void PopState();
 	void Clear();
 };
-
-void GameStateManager::Clear()
-{
-	/**
-	while (!m_states.empty())
-	{
-	m_states.back()->cleanUp();
-	m_states.pop_back();
-	}
-	**/
-}
-
-void GameStateManager::ChangeState(Gamestate *state)
-{
-	/**
-	// Cleanup the current state
-	if (!m_states.empty())
-	{
-	m_states.back()->cleanUp();
-	m_states.pop_back();
-	}
-
-	// Store and init the new state
-	m_states.push_back(state);
-	m_states.back()->init();
-	**/
-}
-
-// Pause the current state and go to a new state
-void GameStateManager::PushState(Gamestate *state)
-{
-	/**
-	if (!m_states.empty())
-	m_states.back()->pause();
-
-	m_states.push_back(state);
-	m_states.back()->init();
-	**/
-}
-
-
-//Leave current state and go to previous state
-void GameStateManager::PopState()
-{
-	/**
-	if (!m_states.empty())
-	{
-	m_states.back()->cleanUp();
-	m_states.pop_back();
-	}
-
-	if (!m_states.empty())
-	m_states.back()->resume();
-	**/
-}
 #endif
