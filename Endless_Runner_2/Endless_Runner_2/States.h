@@ -67,11 +67,14 @@ class LiveGame_Gamestate : public Gamestate
 	//random_device random_seeder;
 	//My_Vector vec;
 	//sf::CircleShape shape;
+    int score;
+    sf::Text tScore;
 
-	sf::RectangleShape platform1;
+    sf::RectangleShape platform1;
 	sf::RectangleShape platform2;
 	sf::RectangleShape platform3;
 	int gap_distance;
+    mt19937 engine;
 
 	sf::Texture bombpic;
 	sf::Sprite bomb1_1;

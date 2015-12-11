@@ -63,7 +63,7 @@ public:
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
-
+            
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{

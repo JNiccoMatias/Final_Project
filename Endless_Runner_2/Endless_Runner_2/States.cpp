@@ -19,10 +19,10 @@ Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) :
 	//run_speed.Set_X(-1 * window_width / 2.5 / fps);
 	run_speed = -1 * window_width / 2.5 / fps;
 
-	/*if (!font.loadFromFile("AlegreyaSans-Regular.ttf"))
-	{
-		render_window.close();
-	}*/
+    sf::Font font;
+    if (!font.loadFromFile(resourcePath() + "AlegreyaSans-Regular.ttf")) {
+        return EXIT_FAILURE;
+    }
 }
 
 /*
@@ -59,6 +59,7 @@ LiveGame_Gamestate::LiveGame_Gamestate(sf::RenderWindow &window, int width, int 
 	platform_height = window_height / 20;
 	gap_distance = window_width / 4;
 	platform_width = window_width * 0.9;
+    score = -(run_speed);
 
 	//platform1.setPosition(sf::Vector2f(window_width, platform_height * current_platform_elevation));
 	//platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
@@ -75,6 +76,10 @@ void LiveGame_Gamestate::onActivate()
 	//platform_height = window_height / 20;
 	//gap_distance = window_width / 4;
 	//platform_width = window_width * 2 / 3;
+    
+    sf::Text tScore(std::to_string(score), font, 250);
+    tScore.setColor(sf::Color::Yellow);
+    tScore.setPosition(0, 0);
 
 	platform1.setSize(sf::Vector2f(platform_width, platform_height));
 	platform1.setFillColor(sf::Color::Green);
@@ -126,7 +131,7 @@ void LiveGame_Gamestate::handleInputs()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-
+        //show pause screen
 	}
 }
 void LiveGame_Gamestate::update()
@@ -149,7 +154,7 @@ void LiveGame_Gamestate::update()
 		//current_platform_elevation = platform_elevation_randomizer(generator);
 
 		//random_device random_seeder;
-		mt19937 engine(time(0));
+        
 		uniform_int_distribution<int> platform_dist(current_platform_elevation - 4, 19);
 		uniform_int_distribution<int> bomb_dist(1, 2);
 
@@ -204,6 +209,7 @@ void LiveGame_Gamestate::draw()
 	render_window.draw(bomb2_2);
 	render_window.draw(bomb3_1);
 	render_window.draw(bomb3_2);
+    render_window.draw(tScore);
 }
 
 
