@@ -219,6 +219,25 @@ void MainMenu_Gamestate::onActivate()
         render_window.close();
     }
     sStateMain.setTexture(tStateMain);
+    
+    Play.setSize(sf::Vector2f(600, 100));
+    Play.setFillColor(sf::Color::Transparent);
+    Play.setOutlineColor(sf::Color::White);
+    Play.setOutlineThickness(5);
+    Leaderboards.setSize(sf::Vector2f(600, 100));
+    Leaderboards.setFillColor(sf::Color::Transparent);
+    Leaderboards.setOutlineColor(sf::Color::White);
+    Leaderboards.setOutlineThickness(5);
+    Quit.setSize(sf::Vector2f(600, 100));
+    Quit.setFillColor(sf::Color::Transparent);
+    Quit.setOutlineColor(sf::Color::White);
+    Quit.setOutlineThickness(5);
+    
+    
+    Play.setPosition(sf::Vector2f(300, 365));
+    Leaderboards.setPosition(sf::Vector2f(300, 485));
+    Quit.setPosition(sf::Vector2f(300, 605));
+    
 }
 
 void MainMenu_Gamestate::onDeactivate()
@@ -237,18 +256,40 @@ void MainMenu_Gamestate::resume()
 
 void MainMenu_Gamestate::handleInputs()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
     {
-        
+        //start livegame
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+    {
+        //show leaderboards
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    {
+        render_window.close();
     }
 }
 void MainMenu_Gamestate::update()
 {
-    
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+    {
+        Play.setOutlineColor(sf::Color::Blue);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+    {
+        Leaderboards.setOutlineColor(sf::Color::Blue);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    {
+        Quit.setOutlineColor(sf::Color::Blue);
+    }
 }
 void MainMenu_Gamestate::draw()
 {
     render_window.draw(sStateMain);
+    render_window.draw(Play);
+    render_window.draw(Leaderboards);
+    render_window.draw(Quit);
 }
 
 
@@ -259,7 +300,11 @@ Pause_Gamestate::Pause_Gamestate(sf::RenderWindow &window, int width, int height
 
 void Pause_Gamestate::onActivate()
 {
-
+    if (!tStatePause.loadFromFile(resourcePath() + "state-pause.png"))
+    {
+        render_window.close();
+    }
+    sStatePause.setTexture(tStatePause);
 }
 void Pause_Gamestate::onDeactivate()
 {
@@ -277,7 +322,11 @@ void Pause_Gamestate::resume()
 
 void Pause_Gamestate::handleInputs()
 {
-    
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        //continue livegame
+    }
+
 }
 void Pause_Gamestate::update()
 {
@@ -285,7 +334,7 @@ void Pause_Gamestate::update()
 }
 void Pause_Gamestate::draw()
 {
-    //render_window.draw(state-pause)
+    render_window.draw(sStatePause);
 }
 
 
@@ -296,7 +345,11 @@ GameOver_Gamestate::GameOver_Gamestate(sf::RenderWindow &window, int width, int 
 
 void GameOver_Gamestate::onActivate()
 {
-
+    if (!tStateGameOver.loadFromFile(resourcePath() + "state-gameOver.png"))
+    {
+        render_window.close();
+    }
+    sStateGameOver.setTexture(tStateGameOver);
 }
 void GameOver_Gamestate::onDeactivate()
 {
@@ -314,7 +367,10 @@ void GameOver_Gamestate::resume()
 
 void GameOver_Gamestate::handleInputs()
 {
-
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        //go to Main Menu
+    }
 }
 void GameOver_Gamestate::update()
 {

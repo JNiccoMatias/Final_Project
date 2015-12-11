@@ -109,6 +109,10 @@ class MainMenu_Gamestate : public Gamestate
     
     sf::Texture tStateMain;
     sf::Sprite sStateMain;
+    
+    sf::RectangleShape Play;
+    sf::RectangleShape Leaderboards;
+    sf::RectangleShape Quit;
 
 public:
 	MainMenu_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
@@ -135,6 +139,9 @@ class Pause_Gamestate : public Gamestate
 	//int window_width;
 	//int window_height;
 	//int run_speed;
+    
+    sf::Texture tStatePause;
+    sf::Sprite sStatePause;
 
 public:
 	Pause_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
@@ -161,6 +168,9 @@ class GameOver_Gamestate : public Gamestate
 	//int window_width;
 	//int window_height;
 	//int run_speed;
+    
+    sf::Texture tStateGameOver;
+    sf::Sprite sStateGameOver;
 
 public:
 	GameOver_Gamestate(sf::RenderWindow &window, int width, int height, int fps);
