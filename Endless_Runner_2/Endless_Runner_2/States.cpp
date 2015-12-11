@@ -9,6 +9,7 @@
 #include "States.h"
 #include "PlayerChar.h"
 #include "ResourcePath.hpp"
+#include <cassert>
 
 using namespace std;
 
@@ -19,10 +20,12 @@ Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) :
 	//run_speed.Set_X(-1 * window_width / 2.5 / fps);
 	run_speed = -1 * window_width / 2.5 / fps;
 
+	/*
     sf::Font font;
     if (!font.loadFromFile(resourcePath() + "AlegreyaSans-Regular.ttf")) {
         return EXIT_FAILURE;
     }
+	*/
 }
 
 /*
@@ -92,7 +95,7 @@ void LiveGame_Gamestate::onActivate()
 	platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 	platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 
-	if (!bombpic.loadFromFile(resourcePath() + "bomb.png"))
+	if (!bombpic.loadFromFile(/*resourcePath() + */"bomb.png"))
 	{
 		render_window.close();
 	}
@@ -425,51 +428,95 @@ void Leaderboard_Gamestate::draw()
 
 }
 
-
-void GameStateManager::Clear()
+void GameStateManager::ChangeState(Gamestate* state)
 {
-	/**
-	while (!m_states.empty())
-	{
-	m_states.back()->cleanUp();
-	m_states.pop_back();
-	}
-	**/
-}
-
-void GameStateManager::ChangeState(Gamestate *state)
-{
-	/**
-	// Cleanup the current state
 	if (!m_states.empty())
 	{
-	m_states.back()->cleanUp();
-	m_states.pop_back();
+		m_states.back()->onDeactivate();
+		m_states.pop_back();
 	}
 
-	// Store and init the new state
 	m_states.push_back(state);
-	m_states.back()->init();
-	**/
+	m_states.back()->onActivate();
+}
+void GameStateManager::PushState(Gamestate* state)
+{
+	if (!m_states.empty())
+	{ 
+		m_states.back()->pause();
+	}
+
+	m_states.push_back(state);
+	m_states.back()->onActivate();
+}
+void GameStateManager::PopState()
+{
+	if (!m_states.empty())
+	{
+		m_states.back()->onDeactivate();
+		m_states.pop_back();
+	}
+	if (!m_states.empty())
+	{
+		m_states.back()->resume();
+	}
+}
+void GameStateManager::Clear()
+{
+	while (!m_states.empty())
+	{
+		m_states.back()->onDeactivate();
+		m_states.pop_back();
+	}
+}
+
+/*
+void GameStateManager::Clear()
+{
+	while (!m_states.empty())
+	{
+		m_states.back()->onDeactivate();
+		m_states.pop_back();
+	}
+}
+
+void GameStateManager::ChangeState(std::shared_ptr<Gamestate> &state)
+{
+	if (!m_states.empty())
+	{
+		m_states.back()->onDeactivate();
+		m_states.pop_back();
+	}
+
+	m_states.push_back(state);
+	m_states.back()->onActivate();
 }
 
 // Pause the current state and go to a new state
-void GameStateManager::PushState(Gamestate *state)
+void GameStateManager::PushState(std::shared_ptr<Gamestate> &state)
 {
-	/**
-	if (!m_states.empty())
-	m_states.back()->pause();
+	assert(state->manager == nullptr && "A state can only be in one manager at a time!");
+	std::shared_ptr<Gamestate> previous_state;
 
-	m_states.push_back(state);
-	m_states.back()->init();
-	**/
+	if (!m_states.empty()) {
+		previous_state = m_states.back();
+	}
+
+	state->manager = this;
+	state->m_isActive = true;
+	m_states.push_back(s);
+	state->onActivate();
+
+	if (previous_state) {
+		previous_state->m_isActive = false;
+		previous_state->onDeactivate();
+	}
 }
 
 
 //Leave current state and go to previous state
 void GameStateManager::PopState()
 {
-	/**
 	if (!m_states.empty())
 	{
 	m_states.back()->cleanUp();
@@ -478,5 +525,5 @@ void GameStateManager::PopState()
 
 	if (!m_states.empty())
 	m_states.back()->resume();
-	**/
 }
+*/

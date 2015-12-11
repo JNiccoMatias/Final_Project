@@ -9,18 +9,19 @@
 #include <vector>
 #include <memory>
 #include <random>
+#include <cassert>
 
 //#include "MyVector.h"
+//class My_Vector;
 
 using namespace std;
-
-//class My_Vector;
 
 class GamesStateManager;
 
 class Gamestate
 {
 	friend class GameStateManager;
+	GamesStateManager *manager;
 
 protected:
 	sf::RenderWindow &render_window;
@@ -29,6 +30,8 @@ protected:
 	int run_speed;
 	sf::Font font;
 	//int rand1;
+
+	
 
 public:
 
@@ -46,7 +49,6 @@ public:
 	virtual void resume() = 0;
 
 	virtual void handleInputs() = 0;
-	//virtual void update(int rand_arg1);
 	virtual void update() = 0;
 	virtual void draw() = 0;
 
@@ -225,9 +227,13 @@ public:
 class GameStateManager
 {
 	//vector<std::shared_ptr<Gamestate>> m_states;
-	vector<std::shared_ptr<Gamestate>> m_states;
+	vector<Gamestate*> m_states;
 
 public:
+	GameStateManager()
+	{
+
+	}
 	void ChangeState(Gamestate* state);
 	void PushState(Gamestate* state);
 	void PopState();

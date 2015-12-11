@@ -11,6 +11,11 @@
 
 using namespace std;
 
+std::string resourcePath()
+{
+	return "";
+}
+
 int main()
 {
 	//constant variables
@@ -37,6 +42,9 @@ int main()
         return EXIT_FAILURE;
     }
     window1.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+	//GamesStateManager manager;
+	MainMenu_Gamestate mainMenu(window1,window_width,window_height,fps);
 
 	LiveGame_Gamestate livegame(window1, window_width,window_height, fps);
 
