@@ -20,12 +20,13 @@ Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) :
 	//run_speed.Set_X(-1 * window_width / 2.5 / fps);
 	run_speed = -1 * window_width / 2.5 / fps;
 
-	/*
+	
     sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "AlegreyaSans-Regular.ttf")) {
+    if (!font.loadFromFile(resourcePath() + "AlegreyaSans-Regular.ttf"))
+    {
         return EXIT_FAILURE;
     }
-	*/
+	
 }
 
 /*
@@ -213,6 +214,7 @@ void LiveGame_Gamestate::draw()
 	render_window.draw(bomb3_1);
 	render_window.draw(bomb3_2);
     render_window.draw(tScore);
+    render_window.draw(player1.sPlayer);
 }
 
 

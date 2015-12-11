@@ -13,6 +13,7 @@
 
 //#include "MyVector.h"
 //class My_Vector;
+#include "PlayerChar.h"
 
 using namespace std;
 
@@ -71,6 +72,8 @@ class LiveGame_Gamestate : public Gamestate
 	//sf::CircleShape shape;
     int score;
     sf::Text tScore;
+    
+    class player player1;
 
     sf::RectangleShape platform1;
 	sf::RectangleShape platform2;
