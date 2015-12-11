@@ -5,7 +5,7 @@
 #include <memory>
 #include <random>
 
-#include "MyVector.h"
+//#include "MyVector.h"
 #include "States.h"
 #include "PlayerChar.h"
 #include "ResourcePath.hpp"
@@ -24,7 +24,7 @@ Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) :
     sf::Font font;
     if (!font.loadFromFile(resourcePath() + "AlegreyaSans-Regular.ttf"))
     {
-        return EXIT_FAILURE;
+        render_window.close();
     }
 	
 }
@@ -225,7 +225,7 @@ MainMenu_Gamestate::MainMenu_Gamestate(sf::RenderWindow &window, int width, int 
 
 void MainMenu_Gamestate::onActivate()
 {
-    if (!tStateMain.loadFromFile(resourcePath() + "state-mainMenu.png"))
+    if (!tStateMain.loadFromFile(/*resourcePath() +*/ "state-mainMenu.png"))
     {
         render_window.close();
     }
@@ -311,7 +311,7 @@ Pause_Gamestate::Pause_Gamestate(sf::RenderWindow &window, int width, int height
 
 void Pause_Gamestate::onActivate()
 {
-    if (!tStatePause.loadFromFile(resourcePath() + "state-pause.png"))
+    if (!tStatePause.loadFromFile(/*resourcePath() +*/ "state-pause.png"))
     {
         render_window.close();
     }
@@ -356,7 +356,7 @@ GameOver_Gamestate::GameOver_Gamestate(sf::RenderWindow &window, int width, int 
 
 void GameOver_Gamestate::onActivate()
 {
-    if (!tStateGameOver.loadFromFile(resourcePath() + "state-gameOver.png"))
+    if (!tStateGameOver.loadFromFile(/*resourcePath() +*/ "state-gameOver.png"))
     {
         render_window.close();
     }
