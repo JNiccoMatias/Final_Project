@@ -32,12 +32,20 @@ void player::updateMovement()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
-        sPlayer.move(0,-movementSpeed);
+        if (jump == -500) {
+            do {
+                jump += 1;
+            }while (jump != 0);
+            
+            {
+                jump-=1;
+            }
+        }
+        sPlayer.move(0,jump);
         sPlayer.setTextureRect(sf::IntRect(counterWalking * 100, 0, 100, 200));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        sPlayer.move(0,movementSpeed);
         sPlayer.setTextureRect(sf::IntRect(0, 200, 100, 400));
     }
     

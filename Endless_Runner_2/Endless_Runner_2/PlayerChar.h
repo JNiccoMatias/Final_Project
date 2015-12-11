@@ -20,6 +20,7 @@ public:
     sf::Sprite sPlayer;
     
     int counterWalking = 0;
+    int jump = 0;
     
     player();
     void update();
