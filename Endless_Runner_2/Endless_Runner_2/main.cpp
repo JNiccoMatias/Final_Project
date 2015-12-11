@@ -7,6 +7,7 @@
 
 //#include "MyVector.h"
 #include "States.h"
+#include "ResourcePath.hpp"
 
 using namespace std;
 
@@ -30,6 +31,12 @@ int main()
 	*/
 
 	sf::RenderWindow window1(sf::VideoMode(window_width, window_height), "Endless Runner", sf::Style::Close);
+    
+    sf::Image icon;
+    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
+        return EXIT_FAILURE;
+    }
+    window1.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	LiveGame_Gamestate livegame(window1, window_width,window_height, fps);
 

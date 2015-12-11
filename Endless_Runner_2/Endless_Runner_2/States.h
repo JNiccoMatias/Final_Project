@@ -106,6 +106,9 @@ class MainMenu_Gamestate : public Gamestate
 	//int window_width;
 	//int window_height;
 	//int run_speed;
+    
+    sf::Texture tStateMain;
+    sf::Sprite sStateMain;
 
 public:
 	MainMenu_Gamestate(sf::RenderWindow &window, int width, int height, int fps);

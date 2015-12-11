@@ -8,6 +8,7 @@
 #include "MyVector.h"
 #include "States.h"
 #include "PlayerChar.h"
+#include "ResourcePath.hpp"
 
 using namespace std;
 
@@ -18,10 +19,10 @@ Gamestate::Gamestate(sf::RenderWindow &window, int width, int height, int fps) :
 	//run_speed.Set_X(-1 * window_width / 2.5 / fps);
 	run_speed = -1 * window_width / 2.5 / fps;
 
-	if (!font.loadFromFile("AlegreyaSans-Regular.ttf"))
+	/*if (!font.loadFromFile("AlegreyaSans-Regular.ttf"))
 	{
 		render_window.close();
-	}
+	}*/
 }
 
 /*
@@ -86,7 +87,7 @@ void LiveGame_Gamestate::onActivate()
 	platform2.setPosition(sf::Vector2f(platform1.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 	platform3.setPosition(sf::Vector2f(platform2.getPosition().x + platform_width + gap_distance, platform_height * current_platform_elevation));
 
-	if (!bombpic.loadFromFile("bomb.png"))
+	if (!bombpic.loadFromFile(resourcePath() + "bomb.png"))
 	{
 		render_window.close();
 	}
@@ -114,7 +115,7 @@ void LiveGame_Gamestate::onDeactivate()
 
 void LiveGame_Gamestate::pause()
 {
-
+    
 }
 void LiveGame_Gamestate::resume()
 {
@@ -208,12 +209,16 @@ void LiveGame_Gamestate::draw()
 
 MainMenu_Gamestate::MainMenu_Gamestate(sf::RenderWindow &window, int width, int height, int fps) : Gamestate(window, width, height, fps)
 {
-
+    
 }
 
 void MainMenu_Gamestate::onActivate()
 {
-
+    if (!tStateMain.loadFromFile(resourcePath() + "state-mainMenu.png"))
+    {
+        render_window.close();
+    }
+    sStateMain.setTexture(tStateMain);
 }
 
 void MainMenu_Gamestate::onDeactivate()
@@ -232,21 +237,24 @@ void MainMenu_Gamestate::resume()
 
 void MainMenu_Gamestate::handleInputs()
 {
-
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        
+    }
 }
 void MainMenu_Gamestate::update()
 {
-
+    
 }
 void MainMenu_Gamestate::draw()
 {
-
+    render_window.draw(sStateMain);
 }
 
 
 Pause_Gamestate::Pause_Gamestate(sf::RenderWindow &window, int width, int height, int fps) : Gamestate(window, width, height, fps)
 {
-
+    
 }
 
 void Pause_Gamestate::onActivate()
@@ -269,7 +277,7 @@ void Pause_Gamestate::resume()
 
 void Pause_Gamestate::handleInputs()
 {
-
+    
 }
 void Pause_Gamestate::update()
 {
@@ -277,7 +285,7 @@ void Pause_Gamestate::update()
 }
 void Pause_Gamestate::draw()
 {
-
+    //render_window.draw(state-pause)
 }
 
 
