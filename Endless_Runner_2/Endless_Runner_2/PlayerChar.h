@@ -19,8 +19,6 @@ public:
     //sf::RectangleShape rect;
     sf::Sprite sPlayer;
     
-    int movementSpeed = 2;
-    int attackDamage = 5;
     int counterWalking = 0;
     
     player();
